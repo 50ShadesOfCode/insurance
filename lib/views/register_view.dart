@@ -1,40 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:insurance/views/register_view.dart';
 
-class SettingsView extends StatefulWidget {
-  const SettingsView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<SettingsView> createState() => _SettingsViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _SettingsViewState extends State<SettingsView> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+class _RegisterViewState extends State<RegisterView> {
   final TextEditingController loginController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
 
-  @override
-  void dispose() {
-    loginController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Form(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Register'),
+        ),
+        body: Form(
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), hintText: 'Enter name'),
+                    controller: nameController,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), hintText: 'Enter email'),
+                    controller: emailController,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
@@ -63,17 +77,7 @@ class _SettingsViewState extends State<SettingsView> {
             ),
           ),
         ),
-        TextButton(
-          onPressed: () => {
-            Navigator.of(context).push(
-              MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const RegisterView(),
-              ),
-            )
-          },
-          child: const Text("Don't have an account? Register now"),
-        ),
-      ],
+      ),
     );
   }
 }
