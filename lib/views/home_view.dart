@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insurance/views/about_view.dart';
 import 'package:insurance/views/register_view.dart';
 import 'package:insurance/views/request_view.dart';
 import 'package:insurance/views/search_view.dart';
@@ -14,6 +15,7 @@ class HomeView extends StatefulWidget {
 List<Widget> _pages = <Widget>[
   const SearchView(),
   const SettingsView(),
+  AboutView(),
 ];
 
 class _HomeViewState extends State<HomeView> {
@@ -31,6 +33,10 @@ class _HomeViewState extends State<HomeView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Insurance'),
+          leading: IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () => setState(() {}),
+          ),
         ),
         body: Center(
           child: _pages.elementAt(_selectedIndex),
@@ -38,8 +44,8 @@ class _HomeViewState extends State<HomeView> {
         floatingActionButton: FloatingActionButton(
           onPressed: () => {
             Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => RequestView(),
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext context) => const RequestView(),
               ),
             )
           },
@@ -56,6 +62,10 @@ class _HomeViewState extends State<HomeView> {
             BottomNavigationBarItem(
               label: 'Settings',
               icon: Icon(Icons.settings),
+            ),
+            BottomNavigationBarItem(
+              label: 'About',
+              icon: Icon(Icons.info),
             ),
           ],
         ),

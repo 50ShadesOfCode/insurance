@@ -1,13 +1,17 @@
 import 'package:get_it/get_it.dart';
+import 'package:insurance/providers/api_provider.dart';
 import 'package:insurance/providers/shared_prefs_provider.dart';
 
-final GetIt appLocator = GetIt.instance();
+final GetIt appLocator = GetIt.instance;
 
 final AppDi appDi = AppDi();
 
 class AppDi {
   Future<void> initDependencies() async {
     initPrefs();
+    appLocator.registerSingleton<ApiProvider>(
+      ApiProvider(),
+    );
   }
 
   Future<void> initPrefs() async {

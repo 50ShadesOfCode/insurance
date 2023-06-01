@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:insurance/di.dart';
+import 'package:insurance/providers/shared_prefs_provider.dart';
+import 'package:insurance/views/admin_view.dart';
+import 'package:insurance/views/user_view.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -8,10 +12,16 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
+  late String type;
+
+  @override
+  void initState() {
+    super.initState();
+    type = appLocator.get<SharedPrefsProvider>().getType();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => Card(),
-    );
+    return type == 'User' ? UserView() : AdminView();
   }
 }

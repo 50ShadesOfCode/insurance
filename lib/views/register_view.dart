@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:insurance/di.dart';
+import 'package:insurance/providers/api_provider.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -7,6 +9,8 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
+final List<String> types = ['User', 'Admin'];
+
 class _RegisterViewState extends State<RegisterView> {
   final TextEditingController loginController = TextEditingController();
 
@@ -14,9 +18,9 @@ class _RegisterViewState extends State<RegisterView> {
 
   final TextEditingController nameController = TextEditingController();
 
-  final TextEditingController emailController = TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String dropdownValue = types.first;
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +49,6 @@ class _RegisterViewState extends State<RegisterView> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(), hintText: 'Enter email'),
-                    controller: emailController,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
                         border: OutlineInputBorder(), hintText: 'Enter login'),
                     controller: loginController,
                   ),
@@ -67,9 +63,33 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                 ),
                 Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton<String>(
+                    value: dropdownValue,
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: types.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      appLocator.get<ApiProvider>().register(
+                            loginController.text,
+                            nameController.text,
+                            dropdownValue,
+                            passwordController.text,
+                          )
+                    },
                     child: const Text('Log in'),
                   ),
                 ),

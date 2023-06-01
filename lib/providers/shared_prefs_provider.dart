@@ -15,4 +15,22 @@ class SharedPrefsProvider {
     final String? sessionKey = _sharedPreferences.getString('sessionKey');
     return sessionKey ?? '';
   }
+
+  Future<void> setUserId(int id) async {
+    await _sharedPreferences.setInt('id', id);
+  }
+
+  int getUserId() {
+    final int? userId = _sharedPreferences.getInt('id');
+    return userId ?? -1;
+  }
+
+  Future<void> setType(String type) async {
+    await _sharedPreferences.setString('type', type);
+  }
+
+  String getType() {
+    final String? type = _sharedPreferences.getString('type');
+    return type ?? 'User';
+  }
 }
